@@ -5,6 +5,8 @@ defmodule Lab2.Tasks do
   The end result of this function should be the same as `Enum.map/2`, except that
   each element is processed in parallel with all the others.
 
+  TIP: Use `Task.async/1` and `Task.await/1`.
+
   ## Examples
 
       pmap([url1, url2, ...], fn url -> expensive_request(url) end)
@@ -18,6 +20,8 @@ defmodule Lab2.Tasks do
 
   @doc """
   Takes a stream of enumerables and returns a stream of the sum of each enumerable.
+
+  TIP: Use `Task.async_stream/1`.
 
   ## Examples
 
@@ -34,8 +38,8 @@ defmodule Lab2.Tasks do
   Spawns a process that executes the given computation (given as a function) and that can be
   awaited on.
 
-  Suggestion: there's a function in the `Kernel` module that can help avoiding a race condition
-  when spawning *and then* monitoring.
+  The function should be monitored when spawned by using `spawn_monitor/1`. Monitoring ensures
+  we can handle processes that crash.
 
   ## Examples
 
@@ -59,11 +63,18 @@ defmodule Lab2.Tasks do
 
       {:DOWN, ref, _, _, _}
 
+  This means the `await/1` function needs to receive the message sent from the `async/1` or
+  the monitor down message.
+
   ## Examples
 
       iex> async = Monitor.async(fn -> 1 + 10 end)
       iex> Monitor.await(async)
       {:ok, 11}
+
+      iex> async = Monitor.async(fn -> raise "oops" end)
+      iex> Monitor.await(async)
+      :error
 
   """
   @spec await(term()) :: term()

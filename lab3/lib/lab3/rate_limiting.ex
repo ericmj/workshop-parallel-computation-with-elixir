@@ -42,7 +42,7 @@ defmodule Lab3.RateLimitedConsumer do
   end
 
   # Should ask the producer ("from") for mode demand with GenStage.ask/2, and schedule the next
-  # time it should ask.
+  # time it should ask with Process.send_after/3.
   defp ask_and_schedule(producers, from) do
     raise "not implemented yet"
   end

@@ -42,13 +42,14 @@ defmodule Lab3.RateLimitedConsumer do
   end
 
   # Should ask the producer ("from") for mode demand with GenStage.ask/2, and schedule the next
-  # time it should ask.
+  # time it should ask with Process.send_after/3.
   defp ask_and_schedule(producers, from) do
     case producers do
       %{^from => pending} ->
         GenStage.ask(from, pending)
         Process.send_after(self(), {:ask, from}, @interval)
         Map.put(producers, from, 0)
+
       %{} ->
         producers
     end

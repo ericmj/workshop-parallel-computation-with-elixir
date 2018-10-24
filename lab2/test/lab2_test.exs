@@ -4,17 +4,6 @@ defmodule Lab2.StreamsTest do
   @pride_and_prejudice Path.join(__DIR__, "../../pride-and-prejudice.txt")
 
   @tag :skip
-  test "counting words" do
-    count = Lab2.Streams.count_words_until_stop_word(@pride_and_prejudice, "amusement")
-
-    assert count["must"] == 7
-    assert count["twenty"] == 3
-    assert count["end"] == 1
-
-    refute Map.has_key?(count, "amusement")
-  end
-
-  @tag :skip
   test "take_while/2" do
     stream = Lab2.Streams.take_while(1..1000, &(&1 <= 5))
     assert Enum.to_list(stream) == [1, 2, 3, 4, 5]
@@ -46,6 +35,17 @@ defmodule Lab2.StreamsTest do
              [nil, true, {:value, true}]
 
     assert Lab2.Streams.dedup([nil]) |> Enum.to_list() == [nil]
+  end
+
+  @tag :skip
+  test "counting words" do
+    count = Lab2.Streams.count_words_until_stop_word(@pride_and_prejudice, "amusement")
+
+    assert count["must"] == 7
+    assert count["twenty"] == 3
+    assert count["end"] == 1
+
+    refute Map.has_key?(count, "amusement")
   end
 end
 
