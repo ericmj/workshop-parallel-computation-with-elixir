@@ -53,7 +53,7 @@ defmodule Lab2.Streams do
 
   ## Examples
 
-      stream = dedup([1, 2, 1, 1, 5, 8, 8, 8, 1])
+      stream = uniq([1, 2, 1, 1, 5, 8, 8, 8, 1])
       Enum.to_list(stream)
       #=> [1, 2, 5, 8]
 
